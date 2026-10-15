@@ -145,7 +145,11 @@ struct FilterTrack: View {
         }
         .font(UIDevice.isTV ? .callout : .footnote)
         .controlSize(UIDevice.isTV ? .large : .small)
-        .buttonStyle(.capsule(selectionTint: accentColor, focusTint: UIDevice.isTV ? .white : nil))
+        .buttonStyle(.capsule(
+            selectionTint: accentColor,
+            focusTint: UIDevice.isTV ? .white : nil,
+            minimumHitHeight: UIDevice.isTV ? nil : 44
+        ))
         #if os(tvOS)
         .animation(.snappy(duration: 0.2), value: focus.wrappedValue)
         #endif

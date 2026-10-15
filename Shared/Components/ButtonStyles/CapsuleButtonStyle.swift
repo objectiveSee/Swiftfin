@@ -14,11 +14,17 @@ extension ButtonStyle where Self == CapsuleButtonStyle {
         CapsuleButtonStyle()
     }
 
-    static func capsule(selectionTint: Color = .white, focusTint: Color? = nil, isSelectionActive: Bool = true) -> Self {
+    static func capsule(
+        selectionTint: Color = .white,
+        focusTint: Color? = nil,
+        isSelectionActive: Bool = true,
+        minimumHitHeight: CGFloat? = nil
+    ) -> Self {
         CapsuleButtonStyle(
             selectionTint: selectionTint,
             focusTint: focusTint,
-            isSelectionActive: isSelectionActive
+            isSelectionActive: isSelectionActive,
+            minimumHitHeight: minimumHitHeight
         )
     }
 }
@@ -90,9 +96,17 @@ struct CapsuleButtonStyle: ButtonStyle {
     var selectionTint: Color = .white
     var focusTint: Color?
     var isSelectionActive: Bool = true
+    /// Pads the tappable area vertically to at least this height. The capsule itself keeps its size.
+    var minimumHitHeight: CGFloat?
 
     private var metrics: CapsuleControlMetrics {
         CapsuleControlMetrics(controlSize)
+    }
+
+    private var hitSlop: CGFloat {
+        guard let minimumHitHeight else { return 0 }
+
+        return max(0, (minimumHitHeight - metrics.minimumHeight) / 2)
     }
 
     private var isHighlighted: Bool {
@@ -150,6 +164,8 @@ struct CapsuleButtonStyle: ButtonStyle {
             .clipShape(.capsule)
             .background { background }
             .contentShape(.capsule)
+            .padding(.vertical, hitSlop)
+            .contentShape(.rect)
             .scaleEffect(isEnabled && isFocused ? 1.05 : 1)
             .opacity(opacity(isPressed: configuration.isPressed))
             .shadow(color: isEnabled && isFocused ? .black.opacity(0.5) : .clear, radius: 10)

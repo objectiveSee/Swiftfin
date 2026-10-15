@@ -26,7 +26,6 @@ struct NavigationBarFilterDrawerModifier: ViewModifier {
             }
         }
         .contentMargins(.horizontal, 16, for: .scrollContent)
-        .padding(.bottom, 5)
         .scrollIndicators(.hidden)
         .scrollClipDisabled()
     }

@@ -34,7 +34,8 @@ class UINavigationBarDrawerHostingController<Content: View, Drawer: View>: UIVie
     private let content: Content
 
     // TODO: see if we can get the height instead from the view passed in
-    private let drawerHeight: CGFloat = 36
+    // Matches the 44pt tappable height of the filter buttons.
+    private let drawerHeight: CGFloat = 44
 
     private lazy var blurView: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
